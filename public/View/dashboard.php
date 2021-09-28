@@ -1,4 +1,9 @@
 <?php 
+    session_start();
+
+    if(!isset($_SESSION['usuario'])){
+      header('Location: ../View/login/login.php');
+    }
     require_once 'components/header.php'; 
     require_once 'components/menu.php';
 ?>

@@ -55,6 +55,13 @@ $(document).ready(function() {
             return 0;
         }
 
+        if($('#fecha_nac_interno').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese la fecha de nacimiento del paciente',
+            });
+            return 0;
+        }
+
         if($('#apellidos').val() == ""){
             Swal.fire({
                 text: 'Por favor ingrese el apellido del paciente',
@@ -92,17 +99,53 @@ $(document).ready(function() {
             url:  "../../../Controller/InternoController.php",
             data: datos,
             success:function(r){
-                Swal.fire({
-                    text: 'Paciente Actualizado con éxito',
-                    confirmButtonText: 'Aceptar',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
+                alert(r);
+                if(r == 1){
+
+                    Swal.fire({
+                        text: 'Paciente Guardado con éxito',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            
+                            location.reload();
+                        }
+                    });
+                }else if( r == 2 ){
+                    Swal.fire({
+                        text: 'Paciente Actualizado con éxito',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            
+                            location.reload();
+                        }
+                    });
+                }
             }
-        })
-    })
+        });
+    });
+
+    $('#log_out').click(function(){
+        $.ajax({
+            type: "POST",
+            url:  "../../../Controller/UsuarioController.php",
+            data: {'operador': 2},
+            success:function(r){
+                var rutaAbsoluta = self.location.href;   
+                var posicionUltimaBarra = rutaAbsoluta.lastIndexOf("/");
+                var rutaRelativa = rutaAbsoluta.substring( posicionUltimaBarra + "/".length , rutaAbsoluta.length );
+                
+                if(rutaRelativa == "dashboard.php"){
+                    window.location.assign("../View/login/login.php");
+                }else{
+                    window.location.assign("../login/login.php");
+                }
+            }
+        });
+    });
 
 });
 

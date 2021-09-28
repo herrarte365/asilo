@@ -27,11 +27,10 @@ Class Interno extends Conexion{
                                     $receta_medica, $observaciones, $nombre_encargado, $dpi_encargado, 
                                     $telefono_encargado, $direccion)
     {
-
         try{
             $this->con->beginTransaction();
 
-            $sql_encargado = "INSERT INTO encargado (nombre, cui, telefono, direccion, estado) VALUES (?,?,?,?,?)";
+            $sql_encargado = "INSERT INTO encargado (nombre, cui_encargado, telefono, direccion, estado_encargado) VALUES (?,?,?,?,?)";
             $query = $this->con->prepare($sql_encargado);
             $query->execute([$nombre_encargado, $dpi_encargado, $telefono_encargado, $direccion, 'Solvente']);
 
@@ -39,7 +38,7 @@ Class Interno extends Conexion{
             $id = $this->con->lastInsertId();
 
             $sql_interno = "INSERT INTO ficha_interno (nombres, apellidos, cui, fecha_nacimiento, medico_personal, telefono_medico,
-                                grupo_sanguineo, alergias, enfermedades_cronicas, receta_medico, observaciones, estado, encargado_id_encargado, fecha_ingreso) 
+                                grupo_sanguineo, alergias, enfermedades_cronicas, receta_medico, observaciones, estado_interno, encargado_id_encargado, fecha_ingreso) 
                                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?, now())";
 
             $query = $this->con->prepare($sql_interno);
@@ -48,11 +47,11 @@ Class Interno extends Conexion{
 
             $this->con->commit();
 
-            echo true;
+            echo 1;
 
         }catch(Exception $e){
             $this->con->rollBack();
-            echo false;
+            echo $e;
         }
         
 
@@ -85,7 +84,7 @@ Class Interno extends Conexion{
 
             $this->con->commit();
 
-            echo true;
+            echo 2;
 
         }catch(Exception $e){
             $this->con->rollBack();

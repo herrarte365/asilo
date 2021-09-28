@@ -1,7 +1,5 @@
 <?php
 
-    use InternoController as GlobalInternoController;
-
     require_once ($_SERVER['DOCUMENT_ROOT'].'/dirs.php');
     require_once (MODEL_PATH.'Interno.php');
 
@@ -37,35 +35,39 @@
     // AGREGAR NUEVO INTERNO 
     function setInterno()
     {
+        try{
+            $nombres = $_POST['nombres'];
+            $apellidos = $_POST['apellidos'];
+            $dpi_interno = $_POST['dpi_interno'];
+            $fecha_nac_interno = $_POST['fecha_nac_interno'];
+            $medico_personal = $_POST['medico_personal'];
+            $telefono_medico = $_POST['telefono_medico'];
+            $grupo_sanguineo = $_POST['grupo_sanguineo'];
+            $alergia = $_POST['alergia'];
+            $enfermedades_cronicas = $_POST['enfermedades_cronicas'];
+            $receta_medica = $_POST['receta_medica'];
+            $observaciones = $_POST['observaciones'];
+            $nombre_encargado = $_POST['nombre_encargado'];
+            $dpi_encargado = $_POST['dpi_encargado'];
+            $telefono_encargado = $_POST['telefono_encargado'];
+            $direccion = $_POST['direccion'];
 
-        $nombres = $_POST['nombres'];
-        $apellidos = $_POST['apellidos'];
-        $dpi_interno = $_POST['dpi_interno'];
-        $fecha_nac_interno = $_POST['fecha_nac_interno'];
-        $medico_personal = $_POST['medico_personal'];
-        $telefono_medico = $_POST['telefono_medico'];
-        $grupo_sanguineo = $_POST['grupo_sanguineo'];
-        $alergia = $_POST['alergia'];
-        $enfermedades_cronicas = $_POST['enfermedades_cronicas'];
-        $receta_medica = $_POST['receta_medica'];
-        $observaciones = $_POST['observaciones'];
-        $nombre_encargado = $_POST['nombre_encargado'];
-        $dpi_encargado = $_POST['dpi_encargado'];
-        $telefono_encargado = $_POST['telefono_encargado'];
-        $direccion = $_POST['direccion'];
-
-        $consulta = new Interno();
-        return $resultado = $consulta->insertarInterno($nombres, $apellidos, $dpi_interno, $fecha_nac_interno, $medico_personal, 
-                                                            $telefono_medico, $grupo_sanguineo, $alergia, $enfermedades_cronicas, 
-                                                            $receta_medica, $observaciones, $nombre_encargado, $dpi_encargado, 
-                                                            $telefono_encargado, $direccion);
+            $consulta = new Interno();
+            return $resultado = $consulta->insertarInterno($nombres, $apellidos, $dpi_interno, $fecha_nac_interno, $medico_personal, 
+                                                                $telefono_medico, $grupo_sanguineo, $alergia, $enfermedades_cronicas, 
+                                                                $receta_medica, $observaciones, $nombre_encargado, $dpi_encargado, 
+                                                                $telefono_encargado, $direccion);
             
-        return $resultado;
+        }catch(PDOException $e){
+            return $e;
+        }
 
     }
 
     function updateInterno()
     {
+        try{
+
         $id_ficha_interno = $_POST['id_ficha_interno'];
         $nombres = $_POST['nombres'];
         $apellidos = $_POST['apellidos'];
@@ -89,8 +91,9 @@
                                                             $telefono_medico, $grupo_sanguineo, $alergia, $enfermedades_cronicas, 
                                                             $receta_medica, $observaciones, $nombre_encargado, $dpi_encargado, 
                                                             $telefono_encargado, $direccion, $id_encargado);
-            
-        return $resultado;
+        }catch(PDOException $e){
+            return $e;
+        }
     }
 
 

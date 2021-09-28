@@ -67,11 +67,11 @@
          <div class="profile-details">
             <i class='bx bxs-user-circle bx-md'></i>
            <div class="name_job">
-             <div class="name">Pedro </div>
-             <div class="job">Administrador</div>
+             <div class="name"><?php echo $_SESSION['usuario']; ?></div>
+             <div class="job"><?php echo $_SESSION['rol_name']; ?></div>
            </div>
          </div>
-         <i class='bx bx-log-out' id="log_out" ></i>
+          <i class='bx bx-log-out' id="log_out"></i>
      </li>
     </ul>
   </div>
