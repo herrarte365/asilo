@@ -21,7 +21,7 @@
        <span class="tooltip">Internos</span>
      </li>
      <li>
-       <a href="#">
+       <a href="/public/View/solicitud/listado-solicitudes.php">
        <i class='bx bx-mail-send' ></i>
          <span class="links_name">Solicitudes</span>
        </a>

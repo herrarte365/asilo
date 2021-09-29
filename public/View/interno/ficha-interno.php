@@ -11,8 +11,11 @@
     require_once (VIEW_PATH.'components/header.php');
     require_once (VIEW_PATH.'components/menu.php');
     require_once (CONTROLLER_PATH.'InternoController.php');
+    require_once (CONTROLLER_PATH.'SolicitudController.php');
 
-    $interno = getInterno($_GET['id']);
+    $interno        = getInterno($_GET['id']);
+    $enfermeros     = getEnfermeros();
+    $especialidades = getEspecialidades();
 ?>
 
 <section class="home-section p-2">   
@@ -26,9 +29,12 @@
     </header>
 
     <div class="mt-3">
-        <div class="btn-group shadow" role="group" aria-label="Basic example">
+        <div class="" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 ACTUALIZAR INTERNO
+            </button>
+            <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#solicitudVisitaMedica">
+                AGREGAR VISITA MEDICA
             </button>
             <button class="btn btn-info text-white btn-sm">HISTORIAL MEDICO</button>
         </div>
@@ -187,7 +193,8 @@
 
 
 <!-- AGREGAMOS EL MODAL PARA REGISTRAR NUEVO INTERNO -->
-<?php require_once (VIEW_PATH.'components/modal.php'); ?>
-
-<!-- AGREGAMOS EL FOOTER DE LA PAGINA -->
-<?php require_once (VIEW_PATH.'components/footer.php'); ?>
+<?php 
+    require_once (VIEW_PATH.'components/modal.php'); 
+    require_once (VIEW_PATH.'components/form-solicitud.php'); 
+    require_once (VIEW_PATH.'components/footer.php'); 
+?>

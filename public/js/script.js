@@ -8,14 +8,14 @@ closeBtn.addEventListener("click", ()=>{
     menuBtnChange();//calling the function(optional)
 });
 
-// following are the code to change sidebar button(optional)
 function menuBtnChange() {
     if(sidebar.classList.contains("open")){
-        closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+        closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
     }else {
-        closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+        closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
     }
 }
+
 
 $(document).ready(function() {
     
@@ -45,7 +45,7 @@ $(document).ready(function() {
         },
     });
 
-    // agregar nuevo interno
+    // BOTON PARA AGREGAR NUEVO INTERNO.
     $('#btnAgregarInterno').click(function(){
 
         if($('#nombres').val() == ""){
@@ -128,6 +128,7 @@ $(document).ready(function() {
         });
     });
 
+    // BOTON PARA CERRAR SESIÓN
     $('#log_out').click(function(){
         $.ajax({
             type: "POST",
@@ -142,6 +143,88 @@ $(document).ready(function() {
                     window.location.assign("../View/login/login.php");
                 }else{
                     window.location.assign("../login/login.php");
+                }
+            }
+        });
+    });
+
+    // BOTON PARA AGREGAR NUEVA SOLICITUD DE CITA MEDICA.
+    $('#btnAgregarVisitaMedica').click(function(){
+
+        if($('#nombres').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese el nombre del paciente',
+            });
+            return 0;
+        }
+
+        if($('#fecha_nac_interno').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese la fecha de nacimiento del paciente',
+            });
+            return 0;
+        }
+
+        if($('#apellidos').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese el apellido del paciente',
+            });
+            return 0;
+
+        }
+        
+        if($('#nombre').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese el nombre del encargado',
+            });
+            return 0;
+
+        }
+
+        if($('#telefono').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese un numero de contacto para el encargado',
+            });
+            return 0;
+
+        }
+
+        if($('#direccion').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese una dirección para el encargado',
+            });
+            return 0;
+        }
+
+        let datos = $('#agregarVisitaMedica').serialize();
+        $.ajax({
+            type: "POST",
+            url:  "../../../Controller/SolicitudController.php",
+            data: datos,
+            success:function(r){
+                if(r == 1){
+
+                    Swal.fire({
+                        text: 'Solicitud Enviada con éxito',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            
+                            location.reload();
+                        }
+                    });
+                }else if( r == 2 ){
+                    Swal.fire({
+                        text: 'Solicitud Actualizada con éxito',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            
+                            location.reload();
+                        }
+                    });
                 }
             }
         });
