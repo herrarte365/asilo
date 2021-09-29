@@ -15,7 +15,8 @@
 
     $enfermeros     = getEnfermeros();
     $especialidades = getEspecialidades();
-    $solicitud = getSolicitud($_GET['id']);
+    $solicitud      = getSolicitud($_GET['id']);
+    $especialistas  = getEspecialistas();
 ?>
 
 <section class="home-section p-2">   
@@ -29,10 +30,36 @@
     </header>
 
     <div class="mt-3">
-        <div class="btn-group shadow" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#solicitudVisitaMedica">
-                ACTUALIZAR SOLICITUD
-            </button>
+        <div class="container-fluid" role="group" aria-label="Basic example">
+            <?php 
+                switch($_SESSION['id_rol']){ 
+                    case "3":
+                        echo '
+                        <div class="row row-cols-auto">
+                            <div class="col">
+                                <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#asignarFechaVisita">
+                                    ACEPTAR SOLICITUD
+                                </button>
+                            </div>
+                            <div class="col">
+                                <form method="POST" id="negarVisita">
+                                    <input type="hidden" name="operacion" value="4">
+                                    <input type="hidden" name="id_cita_medica" value="'.$solicitud[0]['id_cita_medica'].'">
+                                    <button type="button" id="btnNegarVisita" class="btn btn-danger text-white btn-sm">
+                                        RECHAZAR SOLICITUD
+                                    </button>
+                                </form>
+                            </div>
+                        </div>';  
+                        break;
+                    case "5":
+                        echo '
+                            <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#solicitudVisitaMedica">
+                                ACTUALIZAR SOLICITUD
+                            </button>';                        
+                        break;
+                }
+            ?>
         </div>
     </div>
     
@@ -54,7 +81,7 @@
                                 PACIENTE
                             </DT>
                             <DD>
-                                <?php echo $solicitud[0]['nombres'] . ' ' . $solicitud[0]['apellidos'] ?>
+                                <?php echo utf8_encode($solicitud[0]['nombres'] . ' ' . $solicitud[0]['apellidos']) ?>
                             </DD>
                             <DT>
                                 FECHA DE SOLICITUD
@@ -106,7 +133,7 @@
                                 ESPECIALIDAD
                             </DT>
                             <DD>
-                                <?php echo $solicitud[0]['nombre_especialidad'] ?>
+                                <?php echo utf8_encode($solicitud[0]['nombre_especialidad']) ?>
                             </DD>
                             <DT>
                                 ENFERMERO
@@ -131,7 +158,16 @@
 
 
 <!-- AGREGAMOS EL MODAL PARA REGISTRAR NUEVO INTERNO -->
-<?php require_once (VIEW_PATH.'components/form-solicitud.php'); ?>
+<?php 
+    switch($_SESSION['id_rol']){
+        case "3":
+            require_once (VIEW_PATH.'components/form-fecha-visita.php'); 
+            break;
+        case "5": 
+            require_once (VIEW_PATH.'components/form-solicitud.php'); 
+            break;
+    }
+?>
 
 <!-- AGREGAMOS EL FOOTER DE LA PAGINA -->
 <?php require_once (VIEW_PATH.'components/footer.php'); ?>

@@ -96,6 +96,49 @@ Class Solicitud extends Conexion{
         return $request;
     }
 
+    public function listadoEspecialista()
+    {
+        $sql = "SELECT * FROM medico_especialista";
+        $execute = $this->con->query($sql);
+        $request = $execute->fetchall(PDO::FETCH_ASSOC);
+        return $request;
+    }
+
+    public function insertarFechaSolicitud($fecha, $hora, $especialista, $cita_medica_id)
+    {
+        try{
+
+            $fechaHora = $fecha . " " . $hora;
+            echo $fechaHora;
+            $sql_solicitud = "UPDATE cita_medica SET fecha_visita = ?, estado = 'Aceptada', medico_especialista_id_medico_especialista = ?
+                                WHERE id_cita_medica = ?";
+
+            $query = $this->con->prepare($sql_solicitud);
+            $query->execute([$fechaHora, $especialista, $cita_medica_id]);
+
+            return 1;
+
+        }catch(Exception $e){
+            return $e;
+        }
+    }
+
+    public function rechazarCitaSolicitud($id_cita_medica){
+        try{
+
+            $sql_solicitud = "UPDATE cita_medica SET fecha_visita = null, estado = 'Rechazada', medico_especialista_id_medico_especialista = null
+                                WHERE id_cita_medica = ?";
+
+            $query = $this->con->prepare($sql_solicitud);
+            $query->execute([$id_cita_medica]);
+
+            echo 1;
+
+        }catch(Exception $e){
+            return $e;
+        }
+    }
+
 }
 
 ?>

@@ -1,8 +1,8 @@
 
 <div class="sidebar">
     <div class="logo-details">
-        <i class='bx bxl-c-plus-plus icon'></i>
-            <div class="logo_name">CodingLab</div>
+        <i class='bx bx-home icon'></i>
+            <div class="logo_name">NuevaVida</div>
         <i class='bx bx-menu' id="btn" ></i>
     </div>
     <ul class="nav-list">
@@ -68,7 +68,7 @@
             <i class='bx bxs-user-circle bx-md'></i>
            <div class="name_job">
              <div class="name"><?php echo $_SESSION['usuario']; ?></div>
-             <div class="job"><?php echo $_SESSION['rol_name']; ?></div>
+             <div class="job"><?php echo utf8_encode($_SESSION['rol_name']) ?></div>
            </div>
          </div>
           <i class='bx bx-log-out' id="log_out"></i>

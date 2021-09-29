@@ -112,6 +112,7 @@ $(document).ready(function() {
                             location.reload();
                         }
                     });
+                    
                 }else if( r == 2 ){
                     Swal.fire({
                         text: 'Paciente Actualizado con éxito',
@@ -230,6 +231,44 @@ $(document).ready(function() {
         });
     });
 
+        // BOTON PARA NEGAR LA VISITA MEDICA
+        $('#btnNegarVisita').click(function(){
+    
+            Swal.fire({
+                title: '¿Esta seguro de rechazar esta solicitud?',
+                showDenyButton: true,
+                confirmButtonText: 'Aceptar',
+                denyButtonText: `Cancelar`,
+              }).then((result) => {
+
+                if (result.isConfirmed) {
+                    let datos = $('#negarVisita').serialize();
+
+                    $.ajax({
+                        type: "POST",
+                        url:  "../../../Controller/SolicitudController.php",
+                        data: datos,
+                        success:function(r){
+                            if(r == 1){
+            
+                                Swal.fire({
+                                    text: 'Solicitud Cancelada con éxito',
+                                    confirmButtonText: 'Aceptar',
+                                }).then((result) => {
+            
+                                    if (result.isConfirmed) {
+                                        
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+              })
+
+            
+        });
 });
 
 
