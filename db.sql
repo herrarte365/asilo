@@ -176,7 +176,9 @@ CREATE TABLE IF NOT EXISTS `asilosite`.`detalle_cita_medicamento` (
   `costo` DECIMAL(12,2) NOT NULL,
   `indicaciones` VARCHAR(200) NOT NULL,
   `cita_medica_id_cita_medica` INT NOT NULL,
-  `medicamento_id_medicamento` INT NOT NULL,
+  `medicamento_id_medicamento` INT NULL,
+    estado_medicina varchar(45) NOT NULL,
+  nombre_medicamento varchar(200) NOT NULL,
   PRIMARY KEY (`id_detalle_cita_medicamento`),
   INDEX `fk_detalle_cita_medicamento_cita_medica1_idx` (`cita_medica_id_cita_medica` ASC) ,
   INDEX `fk_detalle_cita_medicamento_medicamento1_idx` (`medicamento_id_medicamento` ASC) ,
@@ -372,23 +374,30 @@ INSERT INTO rol (nombre_rol) values ('Enfermero General');
 INSERT INTO rol (nombre_rol) values ('Receptor Fundación');
 INSERT INTO rol (nombre_rol) values ('Medico Especialista');
 INSERT INTO rol (nombre_rol) values ('Medico Local');
+INSERT INTO rol (nombre_rol) values ('Encargado de Farmacia');
+INSERT INTO rol (nombre_rol) values ('Encargado de Examenes');
 
 
 
 
 
-INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('administrador', '827ccb0eea8a706c4c34a16891f84e7b', 1);
+INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('administrador', '827ccb0eea8a706c4c34a16891f84e7b', 1); -- 12345
 INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('enfermeroGeneral', '827ccb0eea8a706c4c34a16891f84e7b', 2);
 INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('receptorFundacion', '827ccb0eea8a706c4c34a16891f84e7b', 3);
 INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('medicoEspecialista', '827ccb0eea8a706c4c34a16891f84e7b', 4);
 INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('medicoLocal', '827ccb0eea8a706c4c34a16891f84e7b', 5);
+INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('medicoEspecialista2', '827ccb0eea8a706c4c34a16891f84e7b', 4);
 
 INSERT INTO enfermero (nombre_enfermero) VALUES ('Enfermero 1'), ('Enfermero 2'), ('Enfermero 3');
 INSERT INTO especialidad (nombre_especialidad) VALUES ('Cardiología'), ('Neumología'), ('Cirugía General'), ('Dermatología');
 
-INSERT INTO medico_especialista(nombre) VALUES ('Dr. Pedro R.'), ('Dr. JR');
+INSERT INTO medico_especialista(nombre) VALUES ('Dr. Pedro R.', 4), ('Dr. JR', 6);
 
 INSERT INTO especialidad_has_medico_especialista (especialidad_id_especialidad, medico_especialista_id_medico_especialista)
 VALUES (1,1), (2,2), (3,2);
 
+
+INSERT INTO examen(nombre_examen, descripcion, precio) 
+VALUES ('examen 1', 'examen 1 de prueba', '50.00'),
+('examen 2', 'examen 2 de prueba', '100.50');
 
