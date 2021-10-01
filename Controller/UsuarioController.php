@@ -6,7 +6,7 @@
     if($_POST['operador'] == 1){
         $usuario  = $_POST['usuario'];
         $password = $_POST['pass'];
-        $clave    = md5($password);
+        $clave    = md5($password); 
 
         $user = new Usuario();
         

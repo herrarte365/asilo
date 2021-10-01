@@ -30,9 +30,12 @@
 
     <div class="mt-3">
         <div class="" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                ACTUALIZAR INTERNO
-            </button>
+            <!-- PARA QUE SOLO EL ADMINISTRADOR PUEDA ACTUALIZAR AL INTERNO -->
+            <?php if($_SESSION['id_rol'] == '1'){ ?>
+                <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    ACTUALIZAR INTERNO
+                </button>
+            <?php } ?>
             <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#solicitudVisitaMedica">
                 AGREGAR VISITA MEDICA
             </button>

@@ -197,12 +197,13 @@ $(document).ready(function() {
             return 0;
         }
 
-        let datos = $('#agregarVisitaMedica').serialize();
+        let datos = $('#agregarVisitaMedica').serialize(); 
         $.ajax({
             type: "POST",
             url:  "../../../Controller/SolicitudController.php",
             data: datos,
             success:function(r){
+                
                 if(r == 1){
 
                     Swal.fire({
@@ -231,8 +232,8 @@ $(document).ready(function() {
         });
     });
 
-        // BOTON PARA NEGAR LA VISITA MEDICA
-        $('#btnNegarVisita').click(function(){
+    // BOTON PARA NEGAR LA VISITA MEDICA
+    $('#btnNegarVisita').click(function(){
     
             Swal.fire({
                 title: '¿Esta seguro de rechazar esta solicitud?',
@@ -268,7 +269,155 @@ $(document).ready(function() {
               })
 
             
+    });
+
+    // BOTON PARA AGREGAR SOLICITUD DE EXAMEN.
+    $('#btnAgregarExamen').click(function(){
+
+        if($('#nombre_examen').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese el nombre del examen',
+            });
+            return 0;
+        }
+
+        if($('#descripcion').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese una descripción para el examen',
+            });
+            return 0;
+        }
+
+        let datos = $('#agregarExamen').serialize();
+        $.ajax({
+            type: "POST",
+            url:  "../../../Controller/ExamenController.php",
+            data: datos,
+            success:function(r){
+                alert(r);
+                if(r == 1){
+
+                    Swal.fire({
+                        text: 'Examen solicitado con éxito',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            
+                            location.reload();
+                        }
+                    });
+                    
+                }else{
+
+                }
+            }
         });
+    });
+
+    // BOTON PARA REGISTRAR EL DIAGNOSTICO DEL MEDICO ESPECIALISTA
+    $('#btnAgregarDiagnostico').click(function(){
+
+        if($('#diagnostico').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese un diagnostico.',
+            });
+            return 0;
+        }
+
+        let datos = $('#agregarDiagnostico').serialize();
+        $.ajax({
+            type: "POST",
+            url:  "../../../Controller/SolicitudController.php",
+            data: datos,
+            success:function(r){
+                // alert(r);
+                if(r == 1){
+
+                    Swal.fire({
+                        text: 'Diagnostico Registrado con Éxito',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            
+                            location.reload();
+                        }
+                    });
+                    
+                }else{
+                    
+                }
+            }
+        });
+    });
+
+    // BOTON PARA REGISTRAR MEDICINA PARA EL PACIENTE
+    $('#btnAgregarMedicina').click(function(){
+
+        if($('#nombre_medicina').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese el nombre de la medicina.',
+            });
+            return 0;
+        }
+
+        if($('#cantidad').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese una cantidad de medicina.',
+            });
+            return 0;
+        }
+
+        if($('#indicaciones').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese las indicaciones de consumo.',
+            });
+            return 0;
+        }
+
+        if($('#tiempo_aplicacion').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese el tiempo que debera tomar la medicina.',
+            });
+            return 0;
+        }
+
+        let datos = $('#agregarMedicina').serialize();
+        $.ajax({
+            type: "POST",
+            url:  "../../../Controller/medicamentoController.php",
+            data: datos,
+            success:function(r){
+                alert(r);
+                if(r == 1){
+
+                    Swal.fire({
+                        text: 'Medicina Registrada con Éxito',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            
+                            location.reload();
+                        }
+                    });
+                    
+                }else{
+                    
+                }
+            }
+        });
+    });
+
+    // BOTON PARA ACTUALIZAR LA AGENDA MEDICA
+    $('#btnActualizarAgendaMedica').click(function(){
+
+        // ESTO RECARGA LA PAGINA PARA REFRESCAR LOS  DATOS POR SI SE AGREGO ALGO MAS A LA BD
+        location.reload();
+
+    });
+
 });
 
 

@@ -2,7 +2,7 @@
 <div class="modal fade" id="solicitudVisitaMedica" tabindex="-1" aria-labelledby="solicitudVisitaMedicaLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header"> 
                 <h5 class="modal-title" id="solicitudVisitaMedicaLabel">Crear Solicitud de Visita Medica</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -46,11 +46,11 @@
                                     if($solicitud[0]['especialidad'] == $especialidad['id_especialidad']){
                                 ?>
                                     <option selected value="<?php echo $especialidad['id_especialidad'] ?>">
-                                        <?php echo $especialidad['nombre_especialidad'] ?>
+                                        <?php echo utf8_encode($especialidad['nombre_especialidad']) ?>
                                     </option>
                                 <?php }else { ?>
                                     <option value="<?php echo $especialidad['id_especialidad'] ?>">
-                                        <?php echo $especialidad['nombre_especialidad'] ?>
+                                        <?php echo utf8_encode($especialidad['nombre_especialidad']) ?>
                                     </option>
                                 <?php }} ?>
                             </select>

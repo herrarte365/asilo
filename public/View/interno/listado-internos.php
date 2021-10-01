@@ -28,9 +28,12 @@ session_start();
 
     <div class="mt-3">
         <div class="btn-group shadow" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Agregar Interno
-            </button>
+            <!-- PARA QUE SOLO EL ADMIN PUEDA AGREGAR MAS INTERNOS -->
+            <?php if($_SESSION['id_rol'] == '1'){ ?>
+                <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Agregar Interno
+                </button>
+            <?php } ?>
         </div>
     </div>
     

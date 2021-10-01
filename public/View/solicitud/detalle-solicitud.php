@@ -12,11 +12,17 @@
     require_once (VIEW_PATH.'components/menu.php');
     require_once (CONTROLLER_PATH.'solicitudController.php');
     require_once (CONTROLLER_PATH.'SolicitudController.php');
+    require_once (CONTROLLER_PATH.'ExamenController.php');
+    require_once (CONTROLLER_PATH.'medicamentoController.php');
 
-    $enfermeros     = getEnfermeros();
-    $especialidades = getEspecialidades();
-    $solicitud      = getSolicitud($_GET['id']);
-    $especialistas  = getEspecialistas();
+    $enfermeros                   = getEnfermeros();
+    $especialidades               = getEspecialidades();
+    $solicitud                    = getSolicitud($_GET['id']);
+    $especialistas                = getEspecialistas();
+    $examenes                     = getExamenes();
+    $examenesSolicitadosPaciente  = getExamenesSolicitadosPaciente($_GET['id']);
+    $medicinasSolicitadasPaciente = getMedicinasSolicitadasPaciente($_GET['id']);
+    //print_r($medicinasSolicitadasPaciente);
 ?>
 
 <section class="home-section p-2">   
@@ -51,6 +57,19 @@
                                 </form>
                             </div>
                         </div>';  
+                        break;
+                    case "4":
+                        echo '
+                            <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#solicitarExamen">
+                                SOLICITAR EXAMEN
+                            </button>
+                            <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#registrarDiagnostico">
+                                REGISTRAR DIAGNOSTICO
+                            </button>
+                            <button type="button" class="btn btn-info text-white btn-sm" data-bs-toggle="modal" data-bs-target="#formularioMedicia">
+                                RECETAR MEDICINA
+                            </button>                            
+                            '; 
                         break;
                     case "5":
                         echo '
@@ -154,6 +173,66 @@
         </div>
     </div>
 
+    <div class="mt-3 p-4 bg-white shadow rounded">
+        <div class="jumbotron">
+            <h1 class="display-6">EXAMENES</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Examen</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Resultado</th>
+                    <th scope="col">Costo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($examenesSolicitadosPaciente as $key => $examen){ ?>
+                        <tr>
+                            <td scope="row"><?php echo ($key+1)                          ?></td>
+                            <td scope="row"><?php echo $examen['nombre_examen']          ?></td>
+                            <td scope="row"><?php echo $examen['estado']                 ?></td>
+                            <td scope="row">
+                                <?php echo $examen['resultado'] == "" ? "Pendiente" : $examen['resultado'] ?>
+                            </td>
+                            <td scope="row"><?php echo $examen['precio']                 ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-3 p-4 bg-white shadow rounded">
+        <div class="jumbotron">
+            <h1 class="display-6">RECETA</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Medicamento</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Tiempo de Aplicación</th>
+                    <th scope="col">Indicaciones</th>
+                    <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($medicinasSolicitadasPaciente as $key => $medicamento){ ?>
+                        <tr>
+                            <td scope="row"><?php echo ($key+1)                          ?></td>
+                            <td scope="row"><?php echo $medicamento['nombre_medicina']   ?></td>
+                            <td scope="row"><?php echo $medicamento['cantidad']          ?></td>
+                            <td scope="row"><?php echo $medicamento['tiempo_aplicacion'] ?></td>
+                            <td scope="row"><?php echo $medicamento['indicaciones']      ?></td>
+                            <td scope="row"><?php echo $medicamento['estado_medicina']   ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </section>
 
 
@@ -162,6 +241,11 @@
     switch($_SESSION['id_rol']){
         case "3":
             require_once (VIEW_PATH.'components/form-fecha-visita.php'); 
+            break;
+        case "4":
+            require_once (VIEW_PATH.'components/form-examen.php');
+            require_once (VIEW_PATH.'components/form-diagnostico.php');
+            require_once (VIEW_PATH.'components/form-medicina.php');
             break;
         case "5": 
             require_once (VIEW_PATH.'components/form-solicitud.php'); 

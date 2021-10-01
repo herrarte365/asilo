@@ -8,16 +8,23 @@
         switch($_POST['operacion'])
         {
             case "1": 
+                //AGREGAR SOLICITUD
                 setSolicitud();
                 break;
             case "2":
+                //ACTUALIZAR SOLICITUD
                 updateSolicitud();
                 break;
             case "3":
+                //ASIGNAR FECHA SOLICITUD
                 asignarFechaSolicitud();
                 break;
             case "4":
+                //RECHAZAR LA SOLICITUD
                 rechazarSolicitud();
+            case "5":
+                registrarDiagnostico();
+                break;
         }
     }
 
@@ -43,9 +50,9 @@
     {
         try{
             $motivo_visita = $_POST['motivo_visita'];
-            $enfermero = $_POST['enfermero'];
-            $especialidad = $_POST['especialidad'];
-            $interno = $_POST['id_ficha_interno'];
+            $enfermero     = $_POST['enfermero'];
+            $especialidad  = $_POST['especialidad'];
+            $interno       = $_POST['id_ficha_interno'];
 
             $consulta = new Solicitud();
             return $consulta->insertarSolicitud($motivo_visita, $enfermero, $especialidad, $interno);
@@ -127,5 +134,31 @@
 
     }
 
+    // FUNCION PARA TRAER LAS CITAS ASIGNADAS A UN MEDICO ESPECIALISTA PARA QUE EL LAS VEA. 
+    function getAgendaMedica($id_usuario)
+    {
+        $consulta = new Solicitud();
+        $listadoCitasMedicas = $consulta->listadoCitasMedicas($id_usuario);
+        return $listadoCitasMedicas;
+    }
+
+    // FUNCION PARA REGISTRAR EL DIAGNOSTICO
+    function registrarDiagnostico(){
+
+        try{
+            $diagnostico    = $_POST['diagnostico'];
+            $observaciones  = $_POST['observaciones_medicas'];
+            $id_cita_medica = $_POST['id_cita_medica'];
+
+            $consulta = new Solicitud();
+            $resultado = $consulta->insertarDiagnostico($diagnostico, $observaciones, $id_cita_medica);
+            
+            return $resultado;
+            
+        }catch(PDOException $e){
+            return $e;
+        }
+
+    }
 
 ?>

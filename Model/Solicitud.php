@@ -65,6 +65,7 @@ Class Solicitud extends Conexion{
 
     }
 
+    //CONSULTAR UNA SOLICITUD ESPECIFICA PARA VER DETALLES
     public function consultarSolicitud($id){
         $sql = "SELECT cita_medica.*, ficha_interno.nombres, ficha_interno.apellidos, especialidad.nombre_especialidad, 
                     enfermero.nombre_enfermero, medico_especialista.nombre
@@ -80,6 +81,7 @@ Class Solicitud extends Conexion{
         return $request;
     }
 
+    // DEVUELVE EL LISTADO DE ESPECIALIDADES
     public function listadoEspecialidad()
     {
         $sql = "SELECT * FROM especialidad";
@@ -88,6 +90,7 @@ Class Solicitud extends Conexion{
         return $request;
     }
 
+    // DEVUELVE EL LISTADO DE ENFERMEROS 
     public function listadoEnfermero()
     {
         $sql = "SELECT * FROM enfermero";
@@ -96,6 +99,7 @@ Class Solicitud extends Conexion{
         return $request;
     }
 
+    // DEVUELVE EL LISTADO DE ESPECIALISTAS
     public function listadoEspecialista()
     {
         $sql = "SELECT * FROM medico_especialista";
@@ -104,6 +108,7 @@ Class Solicitud extends Conexion{
         return $request;
     }
 
+    
     public function insertarFechaSolicitud($fecha, $hora, $especialista, $cita_medica_id)
     {
         try{
@@ -123,7 +128,8 @@ Class Solicitud extends Conexion{
         }
     }
 
-    public function rechazarCitaSolicitud($id_cita_medica){
+    public function rechazarCitaSolicitud($id_cita_medica)
+    {
         try{
 
             $sql_solicitud = "UPDATE cita_medica SET fecha_visita = null, estado = 'Rechazada', medico_especialista_id_medico_especialista = null
@@ -138,6 +144,44 @@ Class Solicitud extends Conexion{
             return $e;
         }
     }
+
+    // MEDICO EN MODELO PARA TRAER LAS CITAS ASIGNADAS AL MEDICO ESPECIALISTA
+    public function listadoCitasMedicas($id_usuario)
+    {
+        // TRAEMOS EL CODIGO DEL ESPECIALISTA
+        $sql = "SELECT id_medico_especialista FROM medico_especialista WHERE usuario_id_usuario = " . $id_usuario;
+
+        $execute = $this->con->query($sql);
+        $request = $execute->fetchall(PDO::FETCH_ASSOC);
+
+        $sql = "SELECT cita_medica.*, ficha_interno.nombres, ficha_interno.apellidos FROM cita_medica 
+                INNER JOIN ficha_interno ON cita_medica.ficha_interno_id_ficha_interno = ficha_interno.id_ficha_interno
+                WHERE medico_especialista_id_medico_especialista = " . $request[0]['id_medico_especialista'];
+
+        $execute = $this->con->query($sql);
+        $request = $execute->fetchall(PDO::FETCH_ASSOC);
+        return $request;
+    }
+
+
+    // METODO PARA GUARDAR EL DIAGNOSTICO EN LA BASE DE DATOS
+    public function insertarDiagnostico($diagnostico, $observaciones, $id_cita_medica)
+    {
+        try{
+
+            $sql_solicitud = "UPDATE cita_medica SET diagnostico = ?, observaciones_medicas = ?, estado = 'Diagnosticado'
+                                WHERE id_cita_medica = ?";
+
+            $query = $this->con->prepare($sql_solicitud);
+            $query->execute([$diagnostico, $observaciones, $id_cita_medica]);
+
+            echo 1;
+
+        }catch(Exception $e){
+            echo $e;
+        }
+    }
+
 
 }
 
