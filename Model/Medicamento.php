@@ -20,16 +20,32 @@ Class Medicamento extends Conexion{
         $sql = "SELECT * FROM examen";
         $execute = $this->con->query($sql);
         $request = $execute->fetchall(PDO::FETCH_ASSOC);
-        return $request;
+        return $request; 
     }
 
-    public function listadoExamenesSolicitadosPaciente($id_cita_medica)
+    public function listadoMedicamentosSolicitadosPaciente($id_cita_medica)
     {   //poner el where en examen
         $sql = "SELECT * FROM detalle_cita_medicamento WHERE cita_medica_id_cita_medica = " . $id_cita_medica;
                 
         $execute = $this->con->query($sql);
         $request = $execute->fetchall(PDO::FETCH_ASSOC);
         return $request;
+    }
+
+    public function quitarMedicinaPaciente($id_detalle_cita_medicamento)
+    {
+        try{
+
+            $sql = "DELETE FROM detalle_cita_medicamento WHERE id_detalle_cita_medicamento = " . $id_detalle_cita_medicamento;
+            
+            $query = $this->con->prepare($sql);
+            $query->execute();
+
+            echo 1;
+
+        }catch(PDOException $e){
+            echo $e;
+        }
     }
 
     public function insertarMedicina($id_cita_medica, $nombre_medicina, $cantidad, $tiempo_aplicacion, $indicaciones)

@@ -215,17 +215,25 @@
                     <th scope="col">Tiempo de Aplicación</th>
                     <th scope="col">Indicaciones</th>
                     <th scope="col">Estado</th>
+                    <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($medicinasSolicitadasPaciente as $key => $medicamento){ ?>
                         <tr>
-                            <td scope="row"><?php echo ($key+1)                          ?></td>
-                            <td scope="row"><?php echo $medicamento['nombre_medicina']   ?></td>
-                            <td scope="row"><?php echo $medicamento['cantidad']          ?></td>
-                            <td scope="row"><?php echo $medicamento['tiempo_aplicacion'] ?></td>
-                            <td scope="row"><?php echo $medicamento['indicaciones']      ?></td>
-                            <td scope="row"><?php echo $medicamento['estado_medicina']   ?></td>
+                            <td scope="row"><?php echo ($key+1)                          ?>         </td>
+                            <td scope="row"><?php echo $medicamento['nombre_medicina']   ?>         </td>
+                            <td scope="row"><?php echo $medicamento['cantidad']          ?>         </td>
+                            <td scope="row"><?php echo $medicamento['tiempo_aplicacion'] ?>         </td>
+                            <td scope="row"><?php echo $medicamento['indicaciones']      ?>         </td>
+                            <td scope="row"><?php echo $medicamento['estado_medicina']   ?>         </td>
+                            <td scope="row">
+                                <form id="quitarMedicina" method="POST">
+                                    <input type="hidden" name="id_detalle_cita_medicamento" value="<?php echo $medicamento['id_detalle_cita_medicamento'] ?>">
+                                    <input type="hidden" name="operacion" value="2">
+                                    <button id="btnQuitarMedicina" type="button" class="btn btn-danger btn-sm">Quitar</button> 
+                                </form>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>

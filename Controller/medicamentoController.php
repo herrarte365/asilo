@@ -9,6 +9,9 @@
             case "1": 
                 setMedicamento();
                 break;
+            case "2":
+                quitarMedicamento();
+                break;
         }
     }
 
@@ -32,8 +35,21 @@
 
     function getMedicinasSolicitadasPaciente($id_cita_medica){
         $consulta = new Medicamento();
-        $medicinasSolicitadas = $consulta->listadoExamenesSolicitadosPaciente($id_cita_medica);
+        $medicinasSolicitadas = $consulta->listadoMedicamentosSolicitadosPaciente($id_cita_medica);
         return $medicinasSolicitadas;
     }
+
+    // ESTA FUNCION ES PARA QUITAR UN MEDICAMENTO ASIGNADO A UN PACIENTE EN UNA CITA. 
+    function quitarMedicamento(){
+        try{
+            $id_detalle_cita_medicamento = $_POST['id_detalle_cita_medicamento'];
+
+            $consulta = new Medicamento();
+            return $resultado = $consulta->quitarMedicinaPaciente($id_detalle_cita_medicamento);
+            
+        }catch(PDOException $e){
+            return $e;
+        }
+    }   
 
 ?>
