@@ -417,36 +417,7 @@ $(document).ready(function() {
 
     });
 
-    // BOTON PARA QUITAR UNA MEDICINA
-    $('#btnQuitarMedicina').click(function(){
-        Swal.fire({
-            title: '¿Esta seguro de quitar esta medicina?',
-            showDenyButton: true,
-            confirmButtonText: 'Si',
-            denyButtonText: `No`,
-        }).then((result) => {
-            if (result.isConfirmed) {
 
-                let datos = $('#quitarMedicina').serialize();
-                $.ajax({
-                    type: "POST",
-                    url:  "../../../Controller/medicamentoController.php",
-                    data: datos,
-                    success:function(r){
-                        alert(r);
-                        if(r == 1){
-        
-                            Swal.fire("Operación realizada con éxito")
-                            location.reload();
-                            
-                        }else{
-                            
-                        }
-                    }
-                });
-            }
-        });
-    });
 });
 
 

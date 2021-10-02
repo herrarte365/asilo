@@ -184,6 +184,7 @@
                     <th scope="col">Estado</th>
                     <th scope="col">Resultado</th>
                     <th scope="col">Costo</th>
+                    <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -196,6 +197,9 @@
                                 <?php echo $examen['resultado'] == "" ? "Pendiente" : $examen['resultado'] ?>
                             </td>
                             <td scope="row"><?php echo $examen['precio']                 ?></td>
+                            <td scope="row">
+                                <a href="../../../Controller/ExamenController.php?id_detalle_cita_examen=<?php echo $examen['id_detalle_cita_examen'] ?>&operacion=2&id=<?php echo $examen['cita_medica_id_cita_medica'] ?>"> Quitar </a>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -228,11 +232,7 @@
                             <td scope="row"><?php echo $medicamento['indicaciones']      ?>         </td>
                             <td scope="row"><?php echo $medicamento['estado_medicina']   ?>         </td>
                             <td scope="row">
-                                <form id="quitarMedicina" method="POST">
-                                    <input type="hidden" name="id_detalle_cita_medicamento" value="<?php echo $medicamento['id_detalle_cita_medicamento'] ?>">
-                                    <input type="hidden" name="operacion" value="2">
-                                    <button id="btnQuitarMedicina" type="button" class="btn btn-danger btn-sm">Quitar</button> 
-                                </form>
+                            <a href="../../../Controller/medicamentoController.php?id_detalle_cita_medicamento=<?php echo $medicamento['id_detalle_cita_medicamento'] ?>&operacion=2&id=<?php echo $medicamento['cita_medica_id_cita_medica'] ?>"> Quitar </a>
                             </td>
                         </tr>
                     <?php } ?>

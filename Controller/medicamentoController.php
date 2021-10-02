@@ -3,8 +3,16 @@
     require_once ($_SERVER['DOCUMENT_ROOT'].'/dirs.php');
     require_once (MODEL_PATH.'Medicamento.php');
 
-    if(isset($_POST['operacion'])){
-        switch($_POST['operacion'])
+    if(isset($_POST['operacion']) || isset($_GET['operacion'])){
+
+        
+        if(isset($_GET['operacion'])){
+            $dato = "2";
+        }else{
+            $dato = $_POST['operacion'];
+        }
+
+        switch($dato)
         {
             case "1": 
                 setMedicamento();
@@ -42,10 +50,12 @@
     // ESTA FUNCION ES PARA QUITAR UN MEDICAMENTO ASIGNADO A UN PACIENTE EN UNA CITA. 
     function quitarMedicamento(){
         try{
-            $id_detalle_cita_medicamento = $_POST['id_detalle_cita_medicamento'];
+            $id_detalle_cita_medicamento = $_GET['id_detalle_cita_medicamento'];
 
             $consulta = new Medicamento();
-            return $resultado = $consulta->quitarMedicinaPaciente($id_detalle_cita_medicamento);
+            $consulta->quitarMedicinaPaciente($id_detalle_cita_medicamento);
+
+            header('Location: /public/View/solicitud/detalle-solicitud.php?id=' . $_GET['id']);
             
         }catch(PDOException $e){
             return $e;

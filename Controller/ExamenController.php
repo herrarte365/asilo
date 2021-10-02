@@ -3,11 +3,22 @@
     require_once ($_SERVER['DOCUMENT_ROOT'].'/dirs.php');
     require_once (MODEL_PATH.'Examen.php');
 
-    if(isset($_POST['operacion'])){
-        switch($_POST['operacion'])
+    if(isset($_POST['operacion']) || isset($_GET['operacion'])){
+
+        
+        if(isset($_GET['operacion'])){
+            $dato = "2";
+        }else{
+            $dato = $_POST['operacion'];
+        }
+
+        switch($dato)
         {
             case "1": 
                 setExamen();
+                break;
+            case "2":
+                quitarExamen();
                 break;
         }
     }
@@ -50,5 +61,21 @@
         }
 
     }
+
+    // ESTA FUNCION ES PARA QUITAR UN EXAMEN ASIGNADO A UN PACIENTE EN UNA CITA. 
+    function quitarExamen(){
+        try{
+            $id_detalle_cita_examen = $_GET['id_detalle_cita_examen'];
+
+            $consulta = new Examen();
+            $consulta->quitarExamenPaciente($id_detalle_cita_examen);
+            
+            header('Location: /public/View/solicitud/detalle-solicitud.php?id=' . $_GET['id']);
+
+        }catch(PDOException $e){
+            return $e;
+        }
+    }
+
 
 ?>

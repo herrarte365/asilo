@@ -57,6 +57,22 @@ Class Examen extends Conexion{
         
     }
 
+    public function quitarExamenPaciente($id_detalle_cita_examen)
+    {
+        try{
+
+            $sql = "DELETE FROM detalle_cita_examen WHERE id_detalle_cita_examen = " . $id_detalle_cita_examen;
+            
+            $query = $this->con->prepare($sql);
+            $query->execute();
+
+            echo 1;
+
+        }catch(PDOException $e){
+            echo $e;
+        }
+    }
+
 }
 
 ?>
