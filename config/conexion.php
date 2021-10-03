@@ -3,10 +3,10 @@
 Class Conexion
 {
     private $db_tipo = 'mysql';
-    private $db_host = 'localhost';
+    private $db_host = 'db-mysql-nyc3-50246-asilo-do-user-9818672-0.b.db.ondigitalocean.com';
     private $db_name = 'asilosite';
-    private $db_user = 'root';
-    private $db_pass = '';
+    private $db_user = 'mario';
+    private $db_pass = 'WvViqQyPvxb6uY6D';
     private $conn;
 
     public function __construct()
