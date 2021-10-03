@@ -35,6 +35,43 @@ CREATE TABLE IF NOT EXISTS `asilosite`.`ficha_interno` (
   `enfermedades_cronicas` VARCHAR(255) NULL,
   `receta_medico` VARCHAR(255) NULL,
   `observaciones` VARCHAR(255) NULL,
+-- -----------------------------------------------------
+-- Schema asilosite
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `asilosite` DEFAULT CHARACTER SET utf8 ;
+USE `asilosite` ;
+
+-- -----------------------------------------------------
+-- Table `asilosite`.`encargado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `asilosite`.`encargado` (
+  `id_encargado` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `cui_encargado` VARCHAR(45) NULL,
+  `telefono` VARCHAR(45) NULL,
+  `direccion` VARCHAR(45) NULL,
+  `estado_encargado` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_encargado`),
+  UNIQUE INDEX `id_encargado_UNIQUE` (`id_encargado` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `asilosite`.`ficha_interno`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `asilosite`.`ficha_interno` (
+  `id_ficha_interno` INT NOT NULL AUTO_INCREMENT,
+  `nombres` VARCHAR(45) NULL,
+  `apellidos` VARCHAR(45) NULL,
+  `cui` VARCHAR(45) NULL,
+  `fecha_nacimiento` DATE NULL,
+  `medico_personal` VARCHAR(45) NULL,
+  `telefono_medico` VARCHAR(45) NULL,
+  `grupo_sanguineo` VARCHAR(45) NULL,
+  `alergias` VARCHAR(255) NULL,
+  `enfermedades_cronicas` VARCHAR(255) NULL,
+  `receta_medico` VARCHAR(255) NULL,
+  `observaciones` VARCHAR(255) NULL,
   `estado_interno` VARCHAR(45) NULL,
   fecha_ingreso datetime not null,
   fecha_egreso datetime null,
@@ -97,6 +134,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `asilosite`.`medico_especialista` (
   `id_medico_especialista` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
+  usuario_id_usuario int,
   PRIMARY KEY (`id_medico_especialista`),
   UNIQUE INDEX `id_medico_especialista_UNIQUE` (`id_medico_especialista` ASC) )
 ENGINE = InnoDB;
@@ -177,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `asilosite`.`detalle_cita_medicamento` (
   `indicaciones` VARCHAR(200) NOT NULL,
   `cita_medica_id_cita_medica` INT NOT NULL,
   `medicamento_id_medicamento` INT NULL,
-    estado_medicina varchar(45) NOT NULL,
+  estado_medicina varchar(45) NOT NULL,
   nombre_medicamento varchar(200) NOT NULL,
   PRIMARY KEY (`id_detalle_cita_medicamento`),
   INDEX `fk_detalle_cita_medicamento_cita_medica1_idx` (`cita_medica_id_cita_medica` ASC) ,
@@ -391,7 +429,7 @@ INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('medicoEspecialista
 INSERT INTO enfermero (nombre_enfermero) VALUES ('Enfermero 1'), ('Enfermero 2'), ('Enfermero 3');
 INSERT INTO especialidad (nombre_especialidad) VALUES ('Cardiología'), ('Neumología'), ('Cirugía General'), ('Dermatología');
 
-INSERT INTO medico_especialista(nombre) VALUES ('Dr. Pedro R.', 4), ('Dr. JR', 6);
+INSERT INTO medico_especialista(nombre, usuario_id_usuario) VALUES ('Dr. Pedro R.', 4), ('Dr. JR', 6);
 
 INSERT INTO especialidad_has_medico_especialista (especialidad_id_especialidad, medico_especialista_id_medico_especialista)
 VALUES (1,1), (2,2), (3,2);
@@ -400,4 +438,6 @@ VALUES (1,1), (2,2), (3,2);
 INSERT INTO examen(nombre_examen, descripcion, precio) 
 VALUES ('examen 1', 'examen 1 de prueba', '50.00'),
 ('examen 2', 'examen 2 de prueba', '100.50');
+
+
 
