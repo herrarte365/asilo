@@ -8,7 +8,7 @@
   <ul class="nav-list">
 
     <li>
-      <a href="/public/view/dashboard.php">
+      <a href="/public/View/dashboard.php">
         <i class='bx bx-grid-alt'></i>
         <span class="links_name">Dashboard</span>
       </a>
