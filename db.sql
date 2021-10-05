@@ -35,43 +35,6 @@ CREATE TABLE IF NOT EXISTS `asilosite`.`ficha_interno` (
   `enfermedades_cronicas` VARCHAR(255) NULL,
   `receta_medico` VARCHAR(255) NULL,
   `observaciones` VARCHAR(255) NULL,
--- -----------------------------------------------------
--- Schema asilosite
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `asilosite` DEFAULT CHARACTER SET utf8 ;
-USE `asilosite` ;
-
--- -----------------------------------------------------
--- Table `asilosite`.`encargado`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `asilosite`.`encargado` (
-  `id_encargado` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NULL,
-  `cui_encargado` VARCHAR(45) NULL,
-  `telefono` VARCHAR(45) NULL,
-  `direccion` VARCHAR(45) NULL,
-  `estado_encargado` VARCHAR(45) NULL,
-  PRIMARY KEY (`id_encargado`),
-  UNIQUE INDEX `id_encargado_UNIQUE` (`id_encargado` ASC))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `asilosite`.`ficha_interno`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `asilosite`.`ficha_interno` (
-  `id_ficha_interno` INT NOT NULL AUTO_INCREMENT,
-  `nombres` VARCHAR(45) NULL,
-  `apellidos` VARCHAR(45) NULL,
-  `cui` VARCHAR(45) NULL,
-  `fecha_nacimiento` DATE NULL,
-  `medico_personal` VARCHAR(45) NULL,
-  `telefono_medico` VARCHAR(45) NULL,
-  `grupo_sanguineo` VARCHAR(45) NULL,
-  `alergias` VARCHAR(255) NULL,
-  `enfermedades_cronicas` VARCHAR(255) NULL,
-  `receta_medico` VARCHAR(255) NULL,
-  `observaciones` VARCHAR(255) NULL,
   `estado_interno` VARCHAR(45) NULL,
   fecha_ingreso datetime not null,
   fecha_egreso datetime null,
@@ -425,6 +388,8 @@ INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('receptorFundacion'
 INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('medicoEspecialista', '827ccb0eea8a706c4c34a16891f84e7b', 4);
 INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('medicoLocal', '827ccb0eea8a706c4c34a16891f84e7b', 5);
 INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('medicoEspecialista2', '827ccb0eea8a706c4c34a16891f84e7b', 4);
+INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('encargadoFarmacia', '827ccb0eea8a706c4c34a16891f84e7b', 6);
+INSERT INTO  usuario (usuario, password, rol_id_rol) VALUES ('encargadoExamenes', '827ccb0eea8a706c4c34a16891f84e7b', 7);
 
 INSERT INTO enfermero (nombre_enfermero) VALUES ('Enfermero 1'), ('Enfermero 2'), ('Enfermero 3');
 INSERT INTO especialidad (nombre_especialidad) VALUES ('Cardiología'), ('Neumología'), ('Cirugía General'), ('Dermatología');
@@ -438,6 +403,5 @@ VALUES (1,1), (2,2), (3,2);
 INSERT INTO examen(nombre_examen, descripcion, precio) 
 VALUES ('examen 1', 'examen 1 de prueba', '50.00'),
 ('examen 2', 'examen 2 de prueba', '100.50');
-
 
 

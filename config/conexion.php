@@ -12,7 +12,7 @@ Class Conexion
     public function __construct()
     {
         try{
-            $this->conn = new PDO($this->db_tipo.':host='.$this->db_host.';dbname='.$this->db_name, $this->db_user, $this->db_pass);
+            $this->conn = new PDO($this->db_tipo.':host='.$this->db_host.';dbname='.$this->db_name.';port=3306', $this->db_user, $this->db_pass);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e){
             $this->conn = "Error de conexion";
