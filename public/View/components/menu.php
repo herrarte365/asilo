@@ -88,7 +88,7 @@
     <?php if($_SESSION['id_rol'] == '7'){ ?>
 
       <li>
-        <a href="#">
+        <a href="/public/View/laboratorio/listado-examenes.php">
           <i class='bx bx-folder' ></i>
           <span class="links_name">Examenes</span>
         </a>
@@ -97,10 +97,11 @@
 
     <?php } ?>
      
+    <!-- RUTAS PARA EL ENCARGADO DE LA FARMACIA -->
     <?php if($_SESSION['id_rol'] == '6'){ ?>
 
       <li>
-        <a href="#">
+        <a href="/public/View/farmacia/listado-recetas.php">
           <i class='bx bx-cart-alt' ></i>
           <span class="links_name">Farmacia</span>
         </a>

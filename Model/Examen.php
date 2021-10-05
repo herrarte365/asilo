@@ -23,11 +23,37 @@ Class Examen extends Conexion{
         return $request;
     }
 
+    // CONSULTAR LISTADO DE EXAMENES DISPONIBLES
+    public function consultarExamen($id)
+    {
+        $sql = "SELECT detalle_cita_examen.*, ficha_interno.nombres, ficha_interno.apellidos, examen.nombre_examen, examen.descripcion FROM detalle_cita_examen
+                INNER JOIN examen ON detalle_cita_examen.examen_id_examen = examen.id_examen
+                INNER JOIN cita_medica ON detalle_cita_examen.cita_medica_id_cita_medica = cita_medica.id_cita_medica
+                INNER JOIN ficha_interno ON cita_medica.id_cita_medica = ficha_interno.id_ficha_interno
+                WHERE detalle_cita_examen.id_detalle_cita_examen = " . $id;
+        
+        $execute = $this->con->query($sql);
+        $request = $execute->fetchall(PDO::FETCH_ASSOC);
+        return $request;
+    }
+
     public function listadoExamenesSolicitadosPaciente($id_cita_medica)
     {
         $sql = "SELECT detalle_cita_examen.*, examen.nombre_examen FROM detalle_cita_examen
                 INNER JOIN examen ON detalle_cita_examen.examen_id_examen = examen.id_examen
                 WHERE detalle_cita_examen.cita_medica_id_cita_medica = " . $id_cita_medica;
+                
+        $execute = $this->con->query($sql);
+        $request = $execute->fetchall(PDO::FETCH_ASSOC);
+        return $request;
+    }
+
+    public function listadoExamenesSolicitados()
+    {
+        $sql = "SELECT detalle_cita_examen.*, ficha_interno.nombres, ficha_interno.apellidos, examen.nombre_examen FROM detalle_cita_examen
+                INNER JOIN examen ON detalle_cita_examen.examen_id_examen = examen.id_examen
+                INNER JOIN cita_medica ON detalle_cita_examen.cita_medica_id_cita_medica = cita_medica.id_cita_medica
+                INNER JOIN ficha_interno ON cita_medica.id_cita_medica = ficha_interno.id_ficha_interno";
                 
         $execute = $this->con->query($sql);
         $request = $execute->fetchall(PDO::FETCH_ASSOC);
@@ -55,6 +81,23 @@ Class Examen extends Conexion{
             echo $e;
         }
         
+    }
+
+    public function insertarResultadoExamen($id_examen, $resultado){
+        try{
+
+            $sql = "UPDATE detalle_cita_examen SET estado = 'Realizado',
+            resultado = '" . $resultado . "'
+            WHERE id_detalle_cita_examen = " . $id_examen;
+    
+            $query = $this->con->prepare($sql);
+            $query->execute();
+
+            echo 1;
+
+        }catch(Exception $e){
+            echo $e;
+        }
     }
 
     public function quitarExamenPaciente($id_detalle_cita_examen)

@@ -99,7 +99,6 @@ $(document).ready(function() {
             url:  "../../../Controller/InternoController.php",
             data: datos,
             success:function(r){
-                alert(r);
                 if(r == 1){
 
                     Swal.fire({
@@ -294,7 +293,7 @@ $(document).ready(function() {
             url:  "../../../Controller/ExamenController.php",
             data: datos,
             success:function(r){
-                alert(r);
+                // alert(r);
                 if(r == 1){
 
                     Swal.fire({
@@ -415,6 +414,43 @@ $(document).ready(function() {
         // ESTO RECARGA LA PAGINA PARA REFRESCAR LOS  DATOS POR SI SE AGREGO ALGO MAS A LA BD
         location.reload();
 
+    });
+
+    // BOTON PARA REGISTRAR EL RESULTADO DEL EXAMEN
+    $('#btnAgregarResultadoExamen').click(function(){
+
+        if($('#resultado').val() == ""){
+            Swal.fire({
+                text: 'Por favor ingrese un resultado',
+            });
+            return 0;
+        }
+
+        let datos = $('#agregarResultadoExamen').serialize();
+        $.ajax({
+            type: "POST",
+            url:  "../../../Controller/ExamenController.php",
+            data: datos,
+            success:function(r){
+                alert(r);
+                if(r == 1){
+
+                    Swal.fire({
+                        text: 'Resultado Registrado con éxito',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            
+                            location.reload();
+                        }
+                    });
+                    
+                }else{
+
+                }
+            }
+        });
     });
 
 

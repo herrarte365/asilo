@@ -20,15 +20,18 @@
             case "2":
                 quitarExamen();
                 break;
+            case "3":
+                registrarResultado();
+                break;
         }
     }
 
     //TRAER UN EXAMEN ESPECIFICO
     function getExamen($id)
     {
-        $consulta = new Interno();
-        $interno = $consulta->consultarInterno($id);
-        return $interno;
+        $consulta = new Examen();
+        $examen = $consulta->consultarExamen($id);
+        return $examen;
     }
 
     function getExamenesSolicitadosPaciente($id_cita_medica){
@@ -37,6 +40,13 @@
         return $examenesSolicitados;
     }
 
+
+    // TRAE TODOS LOS EXAMENES
+    function getSolicitudesExamenes(){
+        $consulta = new Examen();
+        $examenesSolicitados = $consulta->listadoExamenesSolicitados();
+        return $examenesSolicitados;
+    }
 
     // EXTRAER LISTADO DE EXAMENES
     function getExamenes()
@@ -55,6 +65,22 @@
 
             $consulta = new Examen();
             return $resultado = $consulta->insertarExamen($id_cita_medica, $id_examen);
+            
+        }catch(PDOException $e){
+            return $e;
+        }
+
+    }
+
+    // AGREGAR RESULTADO AL EXAMEN
+    function registrarResultado()
+    {
+        try{
+            $id_detalle_cita_examen = $_POST['id_detalle_cita_examen'];
+            $resultado = $_POST['resultado'];
+
+            $consulta = new Examen();
+            return $consulta->insertarResultadoExamen($id_detalle_cita_examen, $resultado);
             
         }catch(PDOException $e){
             return $e;
